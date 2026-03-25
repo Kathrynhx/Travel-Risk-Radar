@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Insurance — Holiday Extras</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --hx-purple:      #542E91;
+      --hx-purple-dark: #4b287f;
+      --hx-purple-pale: #f3eeff;
+      --hx-gray-bg:     #f6f6f6;
+      --hx-border:      #D8D8D8;
+      --hx-text:        #222;
+      --green:          #1a7f4b;
+      --green-bg:       #eafaf1;
+      --amber:          #b45309;
+      --amber-bg:       #fffbeb;
+      --red:            #b91c1c;
+      --red-bg:         #fef2f2;
+    }
+
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      color: var(--hx-text);
+      font-size: 18px;
+      background: #fff;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    .nav {
+      background: var(--hx-purple);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .nav-logo {
+      color: #fff;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .nav-links a:hover { color: #fff; }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--hx-purple) 0%, #7c3aed 100%);
+      color: #fff;
+      padding: 56px 24px 48px;
+      text-align: center;
+    }
+    .hero h1 { font-size: 38px; font-weight: 800; margin-bottom: 12px; }
+    .hero p  { font-size: 20px; opacity: 0.9; margin-bottom: 28px; }
+    .hero-badges { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; margin-top: 24px; }
+    .badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    /* ── LAYOUT ───────────────────────────────────────────── */
+    .page-wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .section    { padding: 48px 0; }
+    .section-title {
+      font-size: 28px; font-weight: 800;
+      color: var(--hx-purple); margin-bottom: 8px;
+    }
+    .section-sub { color: #555; font-size: 17px; margin-bottom: 32px; }
+
+    /* ── RADAR WIDGET ─────────────────────────────────────── */
+    .radar-section { background: var(--hx-purple-pale); border-top: 4px solid var(--hx-purple); }
+    .radar-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(84,46,145,0.12);
+    }
+    .radar-header {
+      border-radius: 16px 16px 0 0;
+    }
+    .radar-header {
+      background: var(--hx-purple);
+      color: #fff;
+      padding: 20px 28px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .radar-header .icon { font-size: 28px; }
+    .radar-header h2   { font-size: 22px; font-weight: 800; }
+    .radar-header p    { font-size: 14px; opacity: 0.85; margin-top: 2px; }
+
+    .radar-body { padding: 28px; }
+
+    .radar-selects {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .field label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: #444;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    /* shared input / select chrome */
+    .field select, .ac-input-wrap {
+      width: 100%;
+      height: 50px;
+      border: 2px solid var(--hx-border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 16px;
+      color: var(--hx-text);
+      background: #fff;
+      box-sizing: border-box;
+      transition: border-color 0.15s;
+    }
+    .field select {
+      appearance: none;
+      padding: 0 40px 0 14px;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23542E91' stroke='none' d='M0 0l6 6 6-6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+    }
+    .field select:focus { outline: none; border-color: var(--hx-purple); }
+
+    /* ── Custom autocomplete ── */
+    .autocomplete { position: relative; }
+    .ac-input-wrap {
+      display: flex; align-items: center;
+      padding: 0 10px 0 14px; gap: 6px;
+    }
+    .ac-input-wrap:focus-within { border-color: var(--hx-purple); }
+    .ac-input-wrap svg { flex-shrink: 0; opacity: 0.45; }
+    .ac-input-wrap input {
+      flex: 1; border: none; outline: none;
+      font-family: inherit; font-size: 16px; color: var(--hx-text);
+      background: transparent; min-width: 0;
+    }
+    .ac-input-wrap input::placeholder { color: #aaa; }
+    .ac-clear {
+      background: none; border: none; cursor: pointer;
+      color: #aaa; font-size: 16px; padding: 4px; line-height: 1;
+      display: none;
+    }
+    .ac-clear:hover { color: var(--hx-purple); }
+    .ac-dropdown {
+      display: none;
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: #fff;
+      border: 2px solid var(--hx-purple);
+      border-radius: 8px;
+      max-height: 240px; overflow-y: auto;
+      box-shadow: 0 8px 24px rgba(84,46,145,0.15);
+      z-index: 999;
+    }
+    .ac-dropdown.open { display: block; }
+    .ac-option {
+      padding: 10px 14px; font-size: 15px; cursor: pointer;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .ac-option:last-child { border-bottom: none; }
+    .ac-option:hover, .ac-option.active { background: var(--hx-purple-pale); color: var(--hx-purple); font-weight: 700; }
+    .ac-empty { padding: 12px 14px; color: #888; font-size: 15px; }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--hx-purple);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0 28px;
+      height: 52px;
+      font-family: inherit;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--hx-purple-dark); }
+    .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    /* ── RESULTS (mocked for a "Greece / Leisure" scenario) ── */
+    .results { margin-top: 28px; border-top: 2px solid var(--hx-border); padding-top: 24px; }
+
+    .result-meta {
+      display: flex; justify-content: space-between; align-items: baseline;
+      flex-wrap: wrap; gap: 8px;
+      margin-bottom: 20px;
+    }
+    .result-meta h3 { font-size: 22px; font-weight: 800; color: var(--hx-purple); }
+    .result-meta .meta-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tag {
+      background: var(--hx-purple-pale);
+      color: var(--hx-purple);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .alert {
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .alert-green  { background: var(--green-bg);  border-left: 5px solid var(--green); }
+    .alert-amber  { background: var(--amber-bg);  border-left: 5px solid #f59e0b; }
+    .alert-red    { background: var(--red-bg);    border-left: 5px solid var(--red); }
+    .alert-notice { background: var(--amber-bg);  border-left: 5px solid #f59e0b; }
+    .alert-info   { background: #eff6ff;          border-left: 5px solid #3b82f6; }
+
+    .alert strong { font-weight: 800; display: block; margin-bottom: 6px; }
+    .alert ul { padding-left: 20px; margin-top: 8px; }
+    .alert ul li { margin-bottom: 4px; }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .info-card {
+      border: 1.5px solid var(--hx-border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .entry-links { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--hx-border); padding-top: 10px; }
+    .entry-apply-link { font-size: 13px; font-weight: 700; color: var(--hx-purple); text-decoration: none; }
+    .entry-apply-link:hover { text-decoration: underline; }
+
+    .info-card h4 {
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--hx-purple);
+      margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .info-card ul { padding-left: 18px; font-size: 15px; line-height: 1.7; }
+    .info-card ul li { margin-bottom: 3px; }
+
+    .insurance-block {
+      background: var(--hx-purple-pale);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .insurance-block h4 {
+      font-size: 16px; font-weight: 800; color: var(--hx-purple); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .insurance-block ul { padding-left: 20px; font-size: 15px; line-height: 1.75; }
+    .insurance-block ul li { margin-bottom: 4px; }
+
+    .btn-quote {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--hx-purple);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 18px 28px;
+      font-size: 18px;
+      font-weight: 700;
+      transition: background 0.15s;
+      margin-top: 4px;
+    }
+    .btn-quote:hover { background: var(--hx-purple-dark); }
+
+    .disclaimer {
+      background: #eff6ff;
+      border-left: 5px solid #3b82f6;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #444;
+      margin-top: 20px;
+    }
+
+    /* ── COVER TIERS ──────────────────────────────────────── */
+    .tiers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .tier-card {
+      border: 2px solid var(--hx-border);
+      border-radius: 12px;
+      padding: 24px 20px;
+      text-align: center;
+      position: relative;
+    }
+    .tier-card.featured { border-color: var(--hx-purple); }
+    .tier-badge {
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--hx-purple); color: #fff;
+      font-size: 12px; font-weight: 700; border-radius: 20px;
+      padding: 3px 14px;
+    }
+    .tier-card h3 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .tier-card .price { font-size: 32px; font-weight: 800; color: var(--hx-purple); }
+    .tier-card .price span { font-size: 16px; font-weight: 600; color: #666; }
+    .tier-card ul { text-align: left; padding-left: 0; list-style: none; margin: 16px 0; font-size: 15px; }
+    .tier-card ul li { padding: 5px 0; border-bottom: 1px solid var(--hx-gray-bg); display: flex; gap: 8px; }
+    .tier-card ul li::before { content: "✓"; color: var(--green); font-weight: 800; }
+    .tier-btn {
+      display: block; width: 100%;
+      background: var(--hx-purple); color: #fff;
+      border: none; border-radius: 8px; padding: 12px;
+      font-family: inherit; font-size: 16px; font-weight: 700;
+      cursor: pointer; text-decoration: none; text-align: center;
+    }
+    .tier-btn.outline {
+      background: #fff; color: var(--hx-purple);
+      border: 2px solid var(--hx-purple);
+    }
+
+    /* ── TRUST BAR ────────────────────────────────────────── */
+    .trust-bar {
+      background: var(--hx-gray-bg);
+      border-top: 1px solid var(--hx-border);
+      border-bottom: 1px solid var(--hx-border);
+      padding: 20px 24px;
+    }
+    .trust-items {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap;
+    }
+    .trust-item { font-size: 15px; font-weight: 700; color: #444; display: flex; align-items: center; gap: 8px; }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    footer {
+      background: var(--hx-purple);
+      color: rgba(255,255,255,0.75);
+      text-align: center;
+      padding: 24px;
+      font-size: 14px;
+    }
+
+    /* ── TABS ─────────────────────────────────────────────── */
+    .tab-switcher {
+      display: flex; gap: 0;
+      border-bottom: 2px solid var(--hx-border);
+      margin-bottom: 28px;
+    }
+    .tab {
+      padding: 10px 22px; font-size: 16px; font-weight: 700;
+      cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px;
+      color: #666;
+    }
+    .tab.active { color: var(--hx-purple); border-bottom-color: var(--hx-purple); }
+
+    @media (max-width: 700px) {
+      .radar-selects, .info-grid, .tiers { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 28px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="https://www.holidayextras.com" target="_blank" class="nav-logo">holiday<strong>extras</strong></a>
+  <div class="nav-links">
+    <a href="https://www.holidayextras.com/travel-insurance.html" target="_blank">Travel Insurance</a>
+    <a href="https://www.holidayextras.com/hotels.html" target="_blank">Airport Hotels</a>
+    <a href="https://www.holidayextras.com/airport-parking.html" target="_blank">Airport Parking</a>
+    <a href="https://www.holidayextras.com/airport-lounges.html" target="_blank">Lounges</a>
+    <a href="https://www.holidayextras.com/static/?#/users/new_sign_in?referrer=https://www.holidayextras.com" target="_blank">My Account</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="page-wrap">
+    <h1>Award-winning travel insurance</h1>
+    <p>Trusted by 7 million customers · Rated Excellent on Trustpilot</p>
+    <div class="hero-badges">
+      <div class="badge">🏆 Best Insurance Provider<br>16 consecutive years</div>
+      <div class="badge">⭐ Trustpilot Excellent<br>200,000+ reviews</div>
+      <div class="badge">🌍 Cover in 150+<br>countries</div>
+    </div>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-items">
+    <div class="trust-item">✅ Medical cover up to £15m</div>
+    <div class="trust-item">✅ 24/7 emergency helpline</div>
+    <div class="trust-item">✅ Cover from just £1.49/day</div>
+    <div class="trust-item">✅ FCDO-linked risk guidance</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════ -->
+<!-- TRAVEL RISK RADAR WIDGET                                  -->
+<!-- ════════════════════════════════════════════════════════ -->
+<div class="radar-section section">
+  <div class="page-wrap">
+    <div class="section-title">Travel Risk Radar</div>
+    <div class="section-sub">Check live FCDO advice for your destination, then get a tailored insurance quote in seconds.</div>
+
+    <div class="radar-card">
+      <div class="radar-header">
+        <div class="icon">🌍</div>
+        <div>
+          <h2>Travel Risk Radar</h2>
+          <p>Powered by official FCDO travel advice · GOV.UK</p>
+        </div>
+      </div>
+
+      <div class="radar-body">
+        <!-- INPUTS -->
+        <div class="radar-selects">
+          <div class="field">
+            <label>Destination Country</label>
+            <div class="autocomplete" id="country-ac">
+              <div class="ac-input-wrap">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#542E91" stroke-width="2.5"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+                <input type="text" id="country-input" placeholder="Search countries…" autocomplete="off" />
+                <button class="ac-clear" id="country-clear" tabindex="-1">✕</button>
+              </div>
+              <div class="ac-dropdown" id="country-dropdown"></div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Trip Type</label>
+            <select id="trip-type-select">
+              <option value="" disabled selected>Select trip type…</option>
+              <option value="Leisure / Holiday">Leisure / Holiday</option>
+              <option value="Backpacking / Adventure">Backpacking / Adventure</option>
+              <option value="Family with Children">Family with Children</option>
+              <option value="Honeymoon / Romantic">Honeymoon / Romantic</option>
+              <option value="Business">Business</option>
+              <option value="Medical Tourism">Medical Tourism</option>
+              <option value="Volunteering / NGO Work">Volunteering / NGO Work</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ── RESULTS ── -->
+        <div class="results" id="results">
+        </div><!-- /results -->
+      </div><!-- /radar-body -->
+    </div><!-- /radar-card -->
+  </div>
+</div>
+
+<!-- COVER TIERS -->
+<div class="section" id="tiers-section" style="display:none">
+  <div class="page-wrap">
+    <a href="https://www.holidayextras.com/travel-insurance.html" target="_blank" class="section-title" style="text-decoration:none;display:block;">Choose your cover level</a>
+    <div class="section-sub">All policies include 24/7 emergency assistance and are underwritten by Great Lakes Insurance SE.</div>
+
+    <div class="tiers">
+      <div class="tier-card">
+        <h3>🥉 Bronze</h3>
+        <div class="price">from £18 <span>per trip</span></div>
+        <ul>
+          <li>£15m emergency medical</li>
+          <li>£1,000 trip cancellation</li>
+          <li>£500 baggage</li>
+          <li>£250 travel delay</li>
+        </ul>
+        <a href="https://www.holidayextras.com/travel-insurance/bronze-cover.html" target="_blank" class="tier-btn outline">Get Bronze Quote</a>
+      </div>
+      <div class="tier-card featured">
+        <div class="tier-badge">Most Popular</div>
+        <h3>🥈 Silver</h3>
+        <div class="price">from £28 <span>per trip</span></div>
+        <ul>
+          <li>£15m emergency medical</li>
+          <li>£3,000 trip cancellation</li>
+          <li>£1,500 baggage</li>
+          <li>£500 travel delay</li>
+        </ul>
+        <a href="https://www.holidayextras.com/travel-insurance/silver-cover.html" target="_blank" class="tier-btn">Get Silver Quote</a>
+      </div>
+      <div class="tier-card">
+        <h3>🥇 Gold</h3>
+        <div class="price">from £42 <span>per trip</span></div>
+        <ul>
+          <li>Unlimited emergency medical</li>
+          <li>£5,000 trip cancellation</li>
+          <li>£3,000 baggage</li>
+          <li>£1,000 travel delay</li>
+        </ul>
+        <a href="https://www.holidayextras.com/travel-insurance/gold-cover.html" target="_blank" class="tier-btn outline">Get Gold Quote</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Holiday Extras Ltd · Registered in England No. 01693250 · Authorised and regulated by the FCA</p>
+  <p style="margin-top:8px;font-size:12px;">Travel Risk Radar content sourced from FCDO / GOV.UK under the Open Government Licence. Not financial advice.</p>
+</footer>
+
+<script>
+// ── Holiday Extras destination URL ───────────────────────────────────────────
+const HX_EUROPEAN = new Set([
+  "Albania","Austria","Belarus","Belgium","Bosnia and Herzegovina","Bulgaria",
+  "Croatia","Cyprus","Czech Republic","Denmark","Finland","France","Georgia",
+  "Germany","Greece","Hungary","Iceland","Ireland","Italy","Kosovo","Latvia",
+  "Lithuania","Luxembourg","Malta","Moldova","Montenegro","Netherlands",
+  "North Macedonia","Norway","Poland","Portugal","Romania","Russia","Serbia",
+  "Slovakia","Slovenia","Spain","Sweden","Switzerland","Turkey","Ukraine"
+]);
+
+function hxQuoteUrl(country) {
+  return HX_EUROPEAN.has(country)
+    ? "https://www.holidayextras.com/travel-insurance/european.html"
+    : "https://www.holidayextras.com/travel-insurance/worldwide.html";
+}
+
+// ── Slug map (matches Python COUNTRIES dict) ──────────────────────────────────
+const SLUG = {
+  "Afghanistan":"afghanistan","Albania":"albania","Algeria":"algeria","Angola":"angola",
+  "Argentina":"argentina","Armenia":"armenia","Australia":"australia","Austria":"austria",
+  "Azerbaijan":"azerbaijan","Bahrain":"bahrain","Bangladesh":"bangladesh","Belarus":"belarus",
+  "Belgium":"belgium","Belize":"belize","Bolivia":"bolivia",
+  "Bosnia and Herzegovina":"bosnia-and-herzegovina","Brazil":"brazil","Bulgaria":"bulgaria",
+  "Cambodia":"cambodia","Canada":"canada","Chile":"chile","China":"china",
+  "Colombia":"colombia","Costa Rica":"costa-rica","Croatia":"croatia","Cuba":"cuba",
+  "Cyprus":"cyprus","Czech Republic":"czech-republic","Denmark":"denmark",
+  "Dominican Republic":"dominican-republic","Ecuador":"ecuador","Egypt":"egypt",
+  "El Salvador":"el-salvador","Ethiopia":"ethiopia","Finland":"finland","France":"france",
+  "Georgia":"georgia","Germany":"germany","Ghana":"ghana","Greece":"greece",
+  "Guatemala":"guatemala","Honduras":"honduras","Hungary":"hungary","Iceland":"iceland",
+  "India":"india","Indonesia":"indonesia","Iran":"iran","Iraq":"iraq",
+  "Ireland":"ireland","Israel":"israel","Italy":"italy","Jamaica":"jamaica",
+  "Japan":"japan","Jordan":"jordan","Kazakhstan":"kazakhstan","Kenya":"kenya",
+  "Kosovo":"kosovo","Kuwait":"kuwait","Kyrgyzstan":"kyrgyzstan","Laos":"laos",
+  "Latvia":"latvia","Lebanon":"lebanon","Libya":"libya","Lithuania":"lithuania",
+  "Luxembourg":"luxembourg","Madagascar":"madagascar","Malaysia":"malaysia",
+  "Maldives":"maldives","Malta":"malta","Mexico":"mexico","Moldova":"moldova",
+  "Montenegro":"montenegro","Morocco":"morocco","Mozambique":"mozambique",
+  "Myanmar":"myanmar","Namibia":"namibia","Nepal":"nepal","Netherlands":"netherlands",
+  "New Zealand":"new-zealand","Nicaragua":"nicaragua","Nigeria":"nigeria",
+  "North Korea":"north-korea","North Macedonia":"north-macedonia","Norway":"norway",
+  "Oman":"oman","Pakistan":"pakistan","Panama":"panama","Paraguay":"paraguay",
+  "Peru":"peru","Philippines":"philippines","Poland":"poland","Portugal":"portugal",
+  "Qatar":"qatar","Romania":"romania","Russia":"russia","Rwanda":"rwanda",
+  "Saudi Arabia":"saudi-arabia","Senegal":"senegal","Serbia":"serbia",
+  "Sierra Leone":"sierra-leone","Singapore":"singapore","Slovakia":"slovakia",
+  "Slovenia":"slovenia","Somalia":"somalia","South Africa":"south-africa",
+  "South Korea":"south-korea","South Sudan":"south-sudan","Spain":"spain",
+  "Sri Lanka":"sri-lanka","Sudan":"sudan","Sweden":"sweden","Switzerland":"switzerland",
+  "Syria":"syria","Taiwan":"taiwan","Tajikistan":"tajikistan","Tanzania":"tanzania",
+  "Thailand":"thailand","Tunisia":"tunisia","Turkey":"turkey",
+  "Turkmenistan":"turkmenistan","Uganda":"uganda","Ukraine":"ukraine",
+  "United Arab Emirates":"united-arab-emirates","United States":"usa","Uruguay":"uruguay",
+  "Uzbekistan":"uzbekistan","Venezuela":"venezuela","Vietnam":"vietnam","Yemen":"yemen",
+  "Zambia":"zambia","Zimbabwe":"zimbabwe"
+};
+const ALL_COUNTRIES = Object.keys(SLUG);
+
+// ── Alert level map — mirrors Python _ALERT_LEVEL / _ALERT_PRIORITY ───────────
+const ALERT_PRIORITY = [
+  "avoid_all_travel_to_whole_country",
+  "avoid_all_travel_to_parts",
+  "avoid_all_but_essential_travel_to_whole_country",
+  "avoid_all_but_essential_travel_to_parts"
+];
+const ALERT_LEVEL = {
+  "avoid_all_travel_to_whole_country":               ["🔴","red"],
+  "avoid_all_travel_to_parts":                       ["🟠","amber"],
+  "avoid_all_but_essential_travel_to_whole_country": ["🟠","amber"],
+  "avoid_all_but_essential_travel_to_parts":         ["🟡","amber"]
+};
+
+// ── Insurance copy — matches Python INSURANCE dict ────────────────────────────
+const INSURANCE = {
+  "Leisure / Holiday":       ["Comprehensive travel insurance covering medical emergencies and repatriation.","Cancellation and curtailment cover in case of unexpected events.","Personal baggage and theft protection.","Check your policy covers the full duration of the trip.","Consider 'cancel for any reason' (CFAR) upgrades for flexibility."],
+  "Business":                ["Business travel insurance covering equipment, laptops, and documents.","Emergency repatriation and 24/7 assistance line.","Liability cover if meeting clients or conducting on-site work.","Check whether employer policy covers all destinations — top up if needed.","Consider coverage for trip delays that affect contractual obligations."],
+  "Backpacking / Adventure": ["Adventure sports and activities cover (trekking, scuba, zip-lining, etc.).","Long-stay or multi-trip policy suited to extended journeys.","Emergency evacuation from remote or off-grid locations.","Cover for valuables such as cameras and specialist gear.","24/7 emergency helpline with experience in remote rescues."],
+  "Family with Children":    ["Family travel policy covering all members under one plan.","GHIC (UK Global Health Insurance Card) for EU/EEA destinations.","Child-specific medical cover including paediatric care abroad.","Cancellation cover in case a child or dependent becomes unwell pre-departure.","Check age limits — some policies exclude adults over 65 on family plans."],
+  "Honeymoon / Romantic":    ["Couples policy with cancellation cover for special occasion trips.","Cover for pre-booked experiences (restaurants, excursions, spas).","'Cancel for any reason' upgrade worth considering for high-cost bookings.","Jewellery and valuables cover for engagement rings or gifts.","Check that luxury or boutique accommodation is included in baggage/loss limits."],
+  "Medical Tourism":         ["Specialist medical travel insurance covering planned procedures abroad.","Medical complications cover in case of post-procedure issues.","Repatriation insurance to return to the UK for follow-up treatment.","Check that the policy is not invalidated by elective procedures.","Keep copies of all medical records and treatment plans with your insurer."],
+  "Volunteering / NGO Work": ["Specialist volunteer travel insurance — standard policies often exclude unpaid work.","Gap year or long-stay policy if the placement exceeds 30 days.","Personal liability cover in case of incidents during work activities.","Medical and evacuation cover for remote or conflict-adjacent locations.","Check whether your sending organisation provides group cover or requires individual policies."]
+};
+
+// ── Helpers — faithful JS ports of the Python functions ──────────────────────
+
+// Port of html_to_bullets — paragraphs first (overview), then list items
+function htmlToBullets(html, max = 7) {
+  if (!html) return ["Section not available in FCDO advice for this country."];
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const bullets = [];
+
+  // Leading paragraphs give the best overview summary
+  for (const p of doc.querySelectorAll("p")) {
+    const t = p.textContent.trim();
+    if (t.length > 20) {
+      const first = t.split(".")[0].trim();
+      bullets.push(first.endsWith(".") ? first : first + ".");
+    }
+    if (bullets.length >= 3) break; // cap paragraphs at 3, fill rest from lists
+  }
+
+  // Fill remaining slots with top-level list items
+  for (const li of doc.querySelectorAll("li")) {
+    const t = li.textContent.trim();
+    if (t.length > 15 && !bullets.includes(t)) bullets.push(t);
+    if (bullets.length >= max) break;
+  }
+
+  return bullets.length ? bullets.slice(0, max) : ["No detail available for this section."];
+}
+
+// Port of find_section(parts, key_variants)
+function findSection(parts, keyVariants) {
+  for (const part of parts) {
+    const title = (part.title || "").toLowerCase();
+    if (keyVariants.some(k => title.includes(k))) return part.body || null;
+  }
+  return null;
+}
+
+// Dedicated entry requirements parser — pulls passport validity + visa/entry summary
+function parseEntryRequirements(html) {
+  if (!html) return ["Entry requirements not available for this country."];
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const bullets = [];
+  const seen = new Set();
+
+  const PASSPORT_KEYS = ["passport", "valid for", "validity"];
+  const VISA_KEYS     = ["visa", "esta", "entry requirement", "entry clearance", "permission to enter", "visa waiver", "electronic travel"];
+  const SKIP          = ["find out more", "gov.uk", "apply online", "click here", "see our", "read more"];
+
+  function clean(text) {
+    // Take first sentence only, clean up
+    return text.split(/(?<=[.!?])\s+[A-Z]/)[0].replace(/\s+/g, " ").trim();
+  }
+
+  function addBullet(text) {
+    const t = clean(text);
+    if (t.length < 20) return;
+    if (SKIP.some(s => t.toLowerCase().includes(s))) return;
+    const key = t.toLowerCase().slice(0, 60);
+    if (seen.has(key)) return;
+    seen.add(key);
+    bullets.push(t.endsWith(".") ? t : t + ".");
+  }
+
+  const paras = [...doc.querySelectorAll("p")];
+
+  // 1. Passport validity sentences
+  for (const p of paras) {
+    const t = p.textContent.trim();
+    if (PASSPORT_KEYS.some(k => t.toLowerCase().includes(k))) addBullet(t);
+    if (bullets.length >= 2) break;
+  }
+
+  // 2. Visa / entry requirement sentences
+  for (const p of paras) {
+    const t = p.textContent.trim();
+    if (VISA_KEYS.some(k => t.toLowerCase().includes(k))) addBullet(t);
+    if (bullets.length >= 4) break;
+  }
+
+  // 3. Fill any remaining gap with other paragraphs
+  for (const p of paras) {
+    if (bullets.length >= 4) break;
+    addBullet(p.textContent.trim());
+  }
+
+  // 4. Extract apply links from the HTML
+  const APPLY_KEYS   = ["apply", "esta", "eta", "visa application", "electronic travel", "evisa", "e-visa", "immigration"];
+  const EXCLUDE_KEYS = ["certificate of entitlement", "coe", "driving licence", "driving license", "international driving"];
+  const links = [];
+  for (const a of doc.querySelectorAll("a[href]")) {
+    const text = a.textContent.trim();
+    const href = a.getAttribute("href");
+    if (!href || href.startsWith("#")) continue;
+    const combined = (text + " " + href).toLowerCase();
+    if (APPLY_KEYS.some(k => combined.includes(k)) && !EXCLUDE_KEYS.some(k => combined.includes(k))) {
+      const fullHref = href.startsWith("http") ? href : "https://www.gov.uk" + href;
+      if (!links.find(l => l.href === fullHref)) links.push({ text: text || "Apply here", href: fullHref });
+    }
+    if (links.length >= 2) break;
+  }
+
+  return { bullets: bullets.length ? bullets : ["Check the latest entry requirements on GOV.UK before travelling."], links };
+}
+
+// Port of _warnings_bullets(data)
+// Iterates h2/h3/p/ul/li flat list, handles region headings and pending intros
+function warningsBullets(parts) {
+  for (const part of parts) {
+    if (!(part.title || "").toLowerCase().includes("warning")) continue;
+    const doc = new DOMParser().parseFromString(part.body || "", "text/html");
+    const tags = [...doc.querySelectorAll("h2,h3,p,ul,li")];
+    const bullets = [];
+    let currentRegion = null, pendingIntro = null;
+    let i = 0;
+    while (i < tags.length) {
+      const tag = tags[i];
+      const text = tag.textContent.replace(/\s+/g, " ").trim();
+      if (!text || text.toLowerCase().includes("find out more")) { i++; continue; }
+
+      if (tag.tagName === "H2" || tag.tagName === "H3") {
+        if (!text.toLowerCase().includes("advises") && !text.toLowerCase().includes("insurance"))
+          currentRegion = text.trimEnd();
+        pendingIntro = null; i++; continue;
+      }
+
+      if (tag.tagName === "UL") {
+        const items = [...tag.querySelectorAll("li")]
+          .map(l => l.textContent.trim()).filter(Boolean);
+        if (pendingIntro && items.length) {
+          const prefix = currentRegion ? currentRegion + " — " : "";
+          bullets.push(prefix + pendingIntro + " " + items.join("; ") + ".");
+          currentRegion = null; pendingIntro = null;
+        }
+        i++; continue;
+      }
+
+      if ((tag.tagName === "P" || tag.tagName === "LI") && text.toLowerCase().includes("advises")) {
+        if (text.trimEnd().endsWith(":")) {
+          pendingIntro = text.replace(/:$/, "").trimEnd() + ":";
+        } else {
+          const prefix = currentRegion ? currentRegion + " — " : "";
+          bullets.push(prefix + text);
+          currentRegion = null; pendingIntro = null;
+        }
+      } else {
+        pendingIntro = null;
+      }
+      i++;
+    }
+    return bullets.slice(0, 8);
+  }
+  return [];
+}
+
+// Port of _warnings_notices(data)
+function warningsNotices(parts) {
+  const GENERIC = new Set([
+    "before you travel","get travel advice updates","travel information","stay inside",
+    "areas where fcdo advises against travel","support from the uk government"
+  ]);
+  const BOILERPLATE = [
+    "no travel can be guaranteed","sign up to get email","travel advice on x",
+    "travel advice on facebook","see general advice","read our guide on disability",
+    "sign up to fcdo travel advice","monitor local and international media",
+    "keep your departure plans under review","affected by a crisis abroad",
+    "sign up to local information alerts","if you choose to travel, research",
+    "check the travel advice for"
+  ];
+  for (const part of parts) {
+    if (!(part.title || "").toLowerCase().includes("warning")) continue;
+    const doc = new DOMParser().parseFromString(part.body || "", "text/html");
+    const notices = [];
+    let currentHeading = null;
+    for (const tag of doc.querySelectorAll("h2,h3,p,ul")) {
+      const text = tag.textContent.replace(/\s+/g, " ").trim();
+      if (!text || text.toLowerCase().includes("find out more")) continue;
+      if (tag.tagName === "H2" || tag.tagName === "H3") {
+        const lower = text.toLowerCase().trim();
+        const skip = lower.includes("insurance") || GENERIC.has(lower);
+        currentHeading = skip ? null : text.trimEnd(); continue;
+      }
+      if (tag.tagName === "UL") {
+        if (currentHeading) {
+          const items = [...tag.querySelectorAll("li")].map(l=>l.textContent.trim()).filter(Boolean);
+          if (items.length) { notices.push(currentHeading + ": " + items.join("; ") + "."); currentHeading = null; }
+        }
+        continue;
+      }
+      if (tag.tagName === "P") {
+        if (text.toLowerCase().includes("invalidated")) continue;
+        if (BOILERPLATE.some(b => text.toLowerCase().includes(b))) continue;
+        if (currentHeading) { notices.push(currentHeading + ": " + text); currentHeading = null; }
+        else if (text.length > 40) notices.push(text);
+      }
+    }
+    return notices.slice(0, 8);
+  }
+  return [];
+}
+
+// ── API fetch with cache ───────────────────────────────────────────────────────
+const cache = {};
+async function fetchFCDO(slug) {
+  if (cache[slug]) return cache[slug];
+  const res = await fetch(`https://www.gov.uk/api/content/foreign-travel-advice/${slug}`, {
+    headers: { Accept: "application/json" }
+  });
+  if (!res.ok) throw new Error("GOV.UK API returned " + res.status);
+  const data = await res.json();
+  cache[slug] = data;
+  return data;
+}
+
+// ── Render — mirrors Python render_advisory + render_section + insurance block
+function renderResults(country, tripType, data) {
+  const el       = document.getElementById("results");
+  const slug     = SLUG[country];
+  const govUrl   = `https://www.gov.uk/foreign-travel-advice/${slug}`;
+  const details  = data.details || {};
+  const parts    = details.parts || [];
+  const statuses = details.alert_status || [];
+  const updated  = (data.public_updated_at || "").slice(0, 10) || "Unknown";
+  const ins      = INSURANCE[tripType] || INSURANCE["Leisure / Holiday"];
+
+  // ── Advisory banner (mirrors render_advisory) ────────────────────────────
+  let advisoryShown = false, advisoryHTML = "";
+  for (const key of ALERT_PRIORITY) {
+    if (statuses.includes(key)) {
+      const [icon, cssClass] = ALERT_LEVEL[key];
+      const bullets = warningsBullets(parts);
+      const detail  = bullets.length
+        ? "<ul>" + bullets.map(b => `<li>${b}</li>`).join("") + "</ul>"
+        : "See GOV.UK for full details.";
+      advisoryHTML  = `<div class="alert alert-${cssClass}"><strong>${icon} FCDO Travel Advisory</strong>${detail}</div>`;
+      advisoryShown = true;
+      break;
+    }
+  }
+  if (!advisoryShown) {
+    advisoryHTML = `<div class="alert alert-green"><strong>✅ No FCDO travel advisory against travel to ${country}.</strong></div>`;
+  }
+
+  // ── Warnings & notices (green countries only, same as Python) ─────────────
+  let noticesHTML = "";
+  if (!advisoryShown) {
+    const notices = warningsNotices(parts);
+    if (notices.length) {
+      noticesHTML = `<div class="alert alert-notice"><strong>⚠️ FCDO Warnings &amp; Notices</strong><ul>${notices.map(n=>`<li>${n}</li>`).join("")}</ul></div>`;
+    }
+  }
+
+  // ── FCDO sections (Safety, Health, Entry) ────────────────────────────────
+  const safetyHtml = findSection(parts, ["safety-and-security","safety and security"]);
+  const healthHtml = findSection(parts, ["health"]);
+  const entryHtml  = findSection(parts, ["entry-requirements","entry requirements"]);
+  const entryParsed = parseEntryRequirements(entryHtml);
+  const entryLinksHTML = entryParsed.links.length
+    ? `<div class="entry-links">${entryParsed.links.map(l =>
+        `<a href="${l.href}" target="_blank" class="entry-apply-link">📋 ${l.text} ↗</a>`
+      ).join("")}</div>`
+    : "";
+  const entryCardHTML = `<div class="info-card"><h4>🛂 Entry Requirements</h4><ul>${entryParsed.bullets.map(b=>`<li>${b}</li>`).join("")}</ul>${entryLinksHTML}</div>`;
+
+  const infoHTML = `<div class="info-grid">
+    <div class="info-card"><h4>🛡️ Safety &amp; Security</h4><ul>${htmlToBullets(safetyHtml).map(b=>`<li>${b}</li>`).join("")}</ul></div>
+    <div class="info-card"><h4>💊 Health</h4><ul>${htmlToBullets(healthHtml).map(b=>`<li>${b}</li>`).join("")}</ul></div>
+    ${entryCardHTML}
+  </div>`;
+
+  // ── Insurance + CTA ───────────────────────────────────────────────────────
+  // Python: avoid_all = any("avoid_all_travel_to_whole_country" in s for s in alert_statuses)
+  const avoidAll = statuses.some(s => s.includes("avoid_all_travel_to_whole_country"));
+
+  const insHTML = `<div class="insurance-block">
+    <h4>🔒 Insurance Considerations — ${tripType}</h4>
+    <ul>${ins.map(i=>`<li>${i}</li>`).join("")}</ul>
+  </div>`;
+
+  const ctaHTML = avoidAll
+    ? ""
+    : `<a href="${hxQuoteUrl(country)}" class="btn-quote" target="_blank">🔍 Get a Travel Insurance Quote for ${country} — Holiday Extras ›</a>`;
+
+  // ── Hide / show tier cards (red = hide, everything else = show) ───────────
+  document.getElementById("tiers-section").style.display = avoidAll ? "none" : "";
+
+  // ── Disclaimer ────────────────────────────────────────────────────────────
+  const disclaimerHTML = `<div class="disclaimer"><strong>Disclaimer:</strong> This tool is for informational purposes only. Content is sourced directly from FCDO / GOV.UK and is not verified or modified by Travel Risk Radar. Always check the latest official <a href="${govUrl}" target="_blank">FCDO travel advice</a> before travelling. Insurance recommendations are general guidance and do not constitute financial or legal advice. Consult a qualified insurance adviser for cover suited to your specific circumstances.</div>`;
+
+  el.innerHTML = `
+    <div class="result-meta">
+      <h3>${country} — Travel Risk Summary</h3>
+      <div class="meta-tags">
+        <span class="tag">✈️ ${tripType}</span>
+        <span class="tag">📅 Updated: ${updated}</span>
+        <span class="tag"><a href="${govUrl}" style="color:var(--hx-purple);text-decoration:none;" target="_blank">📋 GOV.UK source ↗</a></span>
+      </div>
+    </div>
+    ${advisoryHTML}
+    ${noticesHTML}
+    ${infoHTML}
+    ${insHTML}
+    ${ctaHTML}
+    ${disclaimerHTML}`;
+}
+
+// ── Custom autocomplete ───────────────────────────────────────────────────────
+const countryInput  = document.getElementById("country-input");
+const dropdown      = document.getElementById("country-dropdown");
+const clearBtn      = document.getElementById("country-clear");
+const tripSelect    = document.getElementById("trip-type-select");
+let selectedCountry = "";
+let activeIdx       = -1;
+let debounceTimer, currentReq = 0;
+
+function showDropdown(filter) {
+  const q = (filter || "").toLowerCase();
+  const matches = q
+    ? ALL_COUNTRIES.filter(c => c.toLowerCase().includes(q))
+    : ALL_COUNTRIES;
+  if (!matches.length) {
+    dropdown.innerHTML = `<div class="ac-empty">No countries found</div>`;
+  } else {
+    dropdown.innerHTML = matches
+      .map((c, i) => `<div class="ac-option" data-country="${c}" data-idx="${i}">${c}</div>`)
+      .join("");
+  }
+  dropdown.classList.add("open");
+  activeIdx = -1;
+}
+
+function closeDropdown() {
+  dropdown.classList.remove("open");
+  activeIdx = -1;
+}
+
+function selectCountry(name) {
+  selectedCountry      = name;
+  countryInput.value   = name;
+  clearBtn.style.display = "block";
+  closeDropdown();
+  triggerUpdate();
+}
+
+function clearCountry() {
+  selectedCountry        = "";
+  countryInput.value     = "";
+  clearBtn.style.display = "none";
+  closeDropdown();
+  document.getElementById("results").innerHTML = "";
+  document.getElementById("tiers-section").style.display = "";
+  countryInput.focus();
+}
+
+// Keyboard navigation
+countryInput.addEventListener("keydown", e => {
+  const opts = dropdown.querySelectorAll(".ac-option");
+  if (!dropdown.classList.contains("open")) return;
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    activeIdx = Math.min(activeIdx + 1, opts.length - 1);
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    activeIdx = Math.max(activeIdx - 1, 0);
+  } else if (e.key === "Enter" && activeIdx >= 0) {
+    e.preventDefault();
+    selectCountry(opts[activeIdx].dataset.country);
+    return;
+  } else if (e.key === "Escape") {
+    closeDropdown(); return;
+  }
+  opts.forEach((o, i) => o.classList.toggle("active", i === activeIdx));
+  if (activeIdx >= 0) opts[activeIdx].scrollIntoView({ block: "nearest" });
+});
+
+countryInput.addEventListener("focus", () => {
+  countryInput.select();
+  showDropdown(countryInput.value);
+});
+
+countryInput.addEventListener("input", () => {
+  selectedCountry = "";
+  clearBtn.style.display = countryInput.value ? "block" : "none";
+  showDropdown(countryInput.value);
+  // clear results while typing
+  document.getElementById("results").innerHTML = "";
+  document.getElementById("tiers-section").style.display = "";
+});
+
+dropdown.addEventListener("mousedown", e => {
+  const opt = e.target.closest(".ac-option");
+  if (opt) selectCountry(opt.dataset.country);
+});
+
+clearBtn.addEventListener("mousedown", e => { e.preventDefault(); clearCountry(); });
+
+// Close when clicking outside
+document.addEventListener("mousedown", e => {
+  if (!document.getElementById("country-ac").contains(e.target)) closeDropdown();
+});
+
+// ── Update results ────────────────────────────────────────────────────────────
+async function triggerUpdate() {
+  const country  = selectedCountry;
+  const tripType = tripSelect.value;
+  const el       = document.getElementById("results");
+  if (!country || !tripType) { el.innerHTML = ""; document.getElementById("tiers-section").style.display = "none"; return; }
+  const reqId = ++currentReq;
+  el.innerHTML = `<div style="padding:20px;color:#666;font-size:16px;">⏳ Fetching live FCDO advice for ${country}…</div>`;
+  try {
+    const data = await fetchFCDO(SLUG[country]);
+    if (reqId !== currentReq) return;
+    renderResults(country, tripType, data);
+  } catch (err) {
+    if (reqId !== currentReq) return;
+    el.innerHTML = `<div class="alert alert-red"><strong>Could not load FCDO data</strong> — check your connection and try again. (${err.message})</div>`;
+  }
+}
+
+tripSelect.addEventListener("change", triggerUpdate);
+</script>
+
+</body>
+</html>
